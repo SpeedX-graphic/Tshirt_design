@@ -122,12 +122,56 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
-
-        .contact-form button:hover {
-            background-color: #ff4d4d;
-            transform: translateY(-3px);
+.overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+            z-index: 1050; /* Lower than loading box but higher than modal */
         }
 
+        .loading {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1100; /* Higher than overlay */
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Stack spinner and text vertically */
+    align-items: center; /* Center contents horizontally */
+    justify-content: center; /* Center contents vertically */
+    background-color: rgba(0, 0, 0, 0.7); /* Optional: Add background color to loading box for better visibility */
+    padding: 20px; /* Optional: Add padding for better spacing */
+    border-radius: 10px; /* Optional: Add rounded corners */
+}
+
+/* Loading spinner and text styling */
+.loading-spinner {
+    border: 8px solid rgba(255, 255, 255, 0.1);
+    border-top: 8px solid #FF0000; /* Color of the spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite; /* Spin animation */
+    margin-bottom: 10px; /* Space between spinner and text */
+}
+
+.loading-text {
+    color: #fff;
+    font-size: 1.2em;
+    text-align: center; /* Center text */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
         h2 {
             color: #FF0000;
             font-family: 'Montserrat', sans-serif;
@@ -267,7 +311,11 @@
         </form>
     </section>
 </div>
-
+<div id="overlay" class="overlay"></div>
+<div id="loadingBox" class="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading, please wait...</div>
+</div>
 <!-- Modal HTML -->
 <div id="successModal" class="modal">
     <div class="modal-content">
@@ -286,28 +334,51 @@
     const form = document.forms['submit-to-google-sheet'];
     const modal = document.getElementById('successModal');
     const closeBtn = document.querySelector('.close');
+    const loadingBox = document.getElementById('loadingBox');
+    const overlay = document.getElementById('overlay');
 
     form.addEventListener('submit', e => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent the default form submission
+
+        // Show the overlay and loading box when form submission starts
+        overlay.style.display = 'block';
+        loadingBox.style.display = 'flex';
+
         fetch(scriptURL, { method: 'POST', body: new FormData(form) })
             .then(response => {
                 console.log('Success!', response);
-                form.reset(); // Reset form after submission
-                modal.style.display = 'block'; // Show the modal immediately after submission
-                setTimeout(() => { modal.style.display = 'none'; }, 3000); // Automatically close modal after 3 seconds
+                form.reset(); // Reset the form after successful submission
+
+                // Hide the loading box and overlay after submission
+                loadingBox.style.display = 'none';
+                overlay.style.display = 'none';
+
+                // Show the success modal
+                modal.style.display = 'block';
+
+                // Automatically close the success modal after 3 seconds
+                setTimeout(() => { 
+                    modal.style.display = 'none'; 
+                }, 3000);
             })
-            .catch(error => console.error('Error!', error.message));
+            .catch(error => {
+                console.error('Error!', error.message);
+
+                // Hide the loading box and overlay in case of an error
+                loadingBox.style.display = 'none';
+                overlay.style.display = 'none';
+            });
     });
 
     // Close the modal when the close button is clicked
     closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none'; // Hide the modal
+        modal.style.display = 'none';
     });
 
     // Optional: Close the modal when clicking outside of it
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
-            modal.style.display = 'none'; // Hide the modal
+            modal.style.display = 'none';
         }
     });
 </script>
