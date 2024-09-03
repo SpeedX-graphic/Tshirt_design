@@ -6,7 +6,7 @@
     <title>Contact - SpeedX</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&family=ND+logos&family=Vegan+Style&display=swap" rel="stylesheet">
-	  <link rel="icon" href="logo.png" type="image/x-icon">
+    <link rel="icon" href="logo.png" type="image/x-icon">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -109,9 +109,11 @@
             margin-bottom: 15px;
             font-size: 1em;
         }
-		#home-link {
-    color: #FF0000; /* Set the color to #FF0000 */
-}
+
+        #home-link {
+            color: #FF0000; /* Set the color to #FF0000 */
+        }
+
         .contact-form button {
             padding: 10px;
             background-color: #FF0000;
@@ -122,60 +124,40 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
-.overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-            z-index: 1050; /* Lower than loading box but higher than modal */
-        }
 
-        .loading {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1100; /* Higher than overlay */
-    font-family: 'Montserrat', sans-serif;
-    text-align: center;
-    display: flex; /* Use flexbox for alignment */
-    flex-direction: column; /* Stack spinner and text vertically */
-    align-items: center; /* Center contents horizontally */
-    justify-content: center; /* Center contents vertically */
-    background-color: rgba(0, 0, 0, 0.7); /* Optional: Add background color to loading box for better visibility */
-    padding: 20px; /* Optional: Add padding for better spacing */
-    border-radius: 10px; /* Optional: Add rounded corners */
-}
-
-/* Loading spinner and text styling */
-.loading-spinner {
-    border: 8px solid rgba(255, 255, 255, 0.1);
-    border-top: 8px solid #FF0000; /* Color of the spinner */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite; /* Spin animation */
-    margin-bottom: 10px; /* Space between spinner and text */
-}
-
-.loading-text {
-    color: #fff;
-    font-size: 1.2em;
-    text-align: center; /* Center text */
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
         h2 {
             color: #FF0000;
             font-family: 'Montserrat', sans-serif;
             font-size: 1.8em;
+        }
+        /* Loading Box CSS */
+        .loading-box {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Black with opacity */
+            color: #fff;
+            text-align: center;
+            padding-top: 20%;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #FF0000;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         footer {
@@ -311,75 +293,50 @@
         </form>
     </section>
 </div>
-<div id="overlay" class="overlay"></div>
-<div id="loadingBox" class="loading">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Loading, please wait...</div>
+<!-- Loading Box HTML -->
+<div id="loadingBox" class="loading-box">
+    <div class="spinner"></div>
+    <p>Sending your message...</p>
 </div>
+
 <!-- Modal HTML -->
 <div id="successModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <p>Your message has been sent successfully!<br>
-		We will send you an e-mail as soon as possible.<br>
-		Thank You!</p>
+        We will send you an e-mail as soon as possible.<br>
+        Thank You!</p>
     </div>
 </div>
 
 <footer>
     <p>&copy; 2024 SpeedX. All Rights Reserved.</p>
 </footer>
+
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycby_MKsuDZI1AYfIkJ8NpmVp7v9BKoqDB92EBU3RLc235kN-pq40Nh1qrvhlw5yiilKB/exec'; // Your new script URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwld8lHJeEIChb3dto_JroSuct4Oc51tgg5_EjFK3MdONwtXCLPjXJNQHNp-Fxza27M/exec';
     const form = document.forms['submit-to-google-sheet'];
-    const modal = document.getElementById('successModal');
-    const closeBtn = document.querySelector('.close');
     const loadingBox = document.getElementById('loadingBox');
-    const overlay = document.getElementById('overlay');
+    const successModal = document.getElementById('successModal');
+    const closeBtn = document.querySelector('.close');
 
     form.addEventListener('submit', e => {
-        e.preventDefault(); // Prevent the default form submission
-
-        // Show the overlay and loading box when form submission starts
-        overlay.style.display = 'block';
-        loadingBox.style.display = 'flex';
-
+        e.preventDefault();
+        loadingBox.style.display = 'block'; // Show loading box
         fetch(scriptURL, { method: 'POST', body: new FormData(form) })
             .then(response => {
                 console.log('Success!', response);
-                form.reset(); // Reset the form after successful submission
-
-                // Hide the loading box and overlay after submission
-                loadingBox.style.display = 'none';
-                overlay.style.display = 'none';
-
-                // Show the success modal
-                modal.style.display = 'block';
-
-                // Automatically close the success modal after 3 seconds
-                setTimeout(() => { 
-                    modal.style.display = 'none'; 
-                }, 3000);
+                loadingBox.style.display = 'none'; // Hide loading box
+                successModal.style.display = 'block'; // Show success modal
             })
             .catch(error => {
                 console.error('Error!', error.message);
-
-                // Hide the loading box and overlay in case of an error
-                loadingBox.style.display = 'none';
-                overlay.style.display = 'none';
+                loadingBox.style.display = 'none'; // Hide loading box in case of error
             });
     });
 
-    // Close the modal when the close button is clicked
     closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-    // Optional: Close the modal when clicking outside of it
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
+        successModal.style.display = 'none';
     });
 </script>
 
