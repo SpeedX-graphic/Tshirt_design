@@ -16,8 +16,7 @@
             color: #fff;
             scroll-behavior: smooth;
         }
-
-        header {
+header {
             background-color: #000;
             color: #fff;
             padding: 0;
@@ -27,7 +26,6 @@
             z-index: 1000;
             transition: background-color 0.3s ease;
         }
-
         .header-content {
             display: flex;
             align-items: center;
@@ -36,19 +34,17 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-
         .logo {
             height: 87px;
         }
-
         nav {
             background-color: #222;
             display: flex;
             justify-content: center;
             padding: 15px 0;
             border-radius: 10px;
+			position: relative
         }
-
         nav a {
             color: #fff;
             margin: 0 25px;
@@ -58,10 +54,29 @@
             font-family: 'Montserrat', sans-serif;
             transition: color 0.3s ease;
         }
-
         nav a:hover {
             color: #ff4d4d;
         }
+        #home-link {
+            color: #FF0000; /* Set the color to #FF0000 */
+        }
+	.vault-link {
+    position: relative; /* To ensure the badge is positioned relative to this link */
+}
+
+.new-badge {
+    background-color: #FF0000; /* Bright red */
+    color: #fff;
+    font-size: 0.6em;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    position: absolute;
+	transform: rotate(30deg);
+    top: -10px; /* Move upwards */
+    right: -22px; /* Move to the right */
+}
 
         .container {
             padding: 30px;
@@ -266,18 +281,19 @@
 <header>
     <div class="header-content">
         <img src="logo.png" alt="SpeedX Logo" class="logo">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html" id="home-link">Contact</a>
-            <a href="social.html">Social</a>
-        </nav>
-    </div>
+       <nav>
+    <a href="index.html" >Home</a>
+    <a href="about.html" >About</a>
+    <a href="contact.html"  id="home-link">Contact</a>
+    <a href="social.html">Social</a>
+    <a href="download.html" class="vault-link">Vault <span class="new-badge">NEW</span></a> <!-- Added NEW tag -->
+</nav>
+ </div>
 </header>
 
 <div class="container">
     <section class="contact-section">
-        <h2>Contact Me</h2>
+        <h2>Contact Us</h2>
         <p>If you have any questions or would like to discuss a project, please get in touch. I’m available on Fiverr and Facebook, and I look forward to working with you!</p>
         <form class="contact-form" name="submit-to-google-sheet">
             <label for="name">Name</label>
