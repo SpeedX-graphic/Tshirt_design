@@ -44,6 +44,7 @@
             justify-content: center;
             padding: 15px 0;
             border-radius: 10px;
+			position: relative
         }
         nav a {
             color: #fff;
@@ -60,6 +61,24 @@
         #home-link {
             color: #FF0000; /* Set the color to #FF0000 */
         }
+	.vault-link {
+    position: relative; /* To ensure the badge is positioned relative to this link */
+}
+
+.new-badge {
+    background-color: #FF0000; /* Bright red */
+    color: #fff;
+    font-size: 0.6em;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    position: absolute;
+	transform: rotate(30deg);
+    top: -10px; /* Move upwards */
+    right: -20px; /* Move to the right */
+}
+
         .container {
             padding: 30px;
             max-width: 1200px;
@@ -212,12 +231,15 @@
 <header>
     <div class="header-content">
         <img src="logo.png" alt="SpeedX Logo" class="logo">
-        <nav>
-            <a href="index.html" id="home-link">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-            <a href="social.html">Social</a>
-        </nav>
+       <nav>
+    <a href="index.html" id="home-link">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="social.html">Social</a>
+    <a href="download.html" class="vault-link">Vault <span class="new-badge">NEW</span></a> <!-- Added NEW tag -->
+</nav>
+
+
     </div>
 </header>
 
@@ -263,6 +285,14 @@
         <div class="testimonial">
             <p>Follow us on social media to see our latest designs and updates and order our designs from Fiverr.</p>
             <button class="bt"><a href="social.html">Go to</a></button>
+        </div>
+    </section>
+	
+	<section class="testimonial-section">
+        <h2>Download our designs for free</h2>
+        <div class="testimonial">
+            <p>Explore our exclusive design collections and assets.</p>
+            <button class="bt"><a href="social.html">Explore Now</a></button>
         </div>
     </section>
 
