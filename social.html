@@ -156,39 +156,37 @@
             width: 100%;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
         }
-        @media (max-width: 768px) {
+      @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 align-items: center;
             }
+
             nav {
-                flex-direction: column;
+                padding: 10px 0;
             }
+
             nav a {
-                margin: 10px 0;
+                margin: 0 10px;
                 font-size: 1em;
             }
+
             .container {
-                margin-top: 128px;
-                padding: 20px;
-            }
-            .social-section {
-                padding: 25px;
+                margin-top: 110px;
             }
         }
+
         @media (max-width: 480px) {
             .logo {
-                height: 50px;
+                height: 60px;
             }
+
             nav a {
                 font-size: 0.9em;
             }
-            .social-section h2 {
-                font-size: 1.8em;
-            }
-            .social-section ul {
-                flex-direction: column;
-                gap: 15px;
+
+            .modal-content {
+                width: 80%;
             }
         }
     </style>
