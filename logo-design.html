@@ -173,6 +173,7 @@
 		margin-top: 20px;
 		cursor: pointer;
 			border: none;
+	outline: none;
 		}
          #confirmDownload{
 		 background-color: #FF0000;
@@ -350,7 +351,7 @@
         <div class="download-modal-content">
             <p>Do you want to download this file?</p>
             <button id="confirmDownload">Yes, Download</button>
-            <button onclick="closeDownloadModal()">Cancel</button>
+            <button onclick="closeDownloadModal()" id="closeDownload">Cancel</button>
         </div>
     </div>
 
