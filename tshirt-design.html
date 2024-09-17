@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault - SpeedX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&family=ND+logos&family=Vegan+Style&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Montserrat, sans-serif;
+            background-color: #111; /* Black background */
+            color: #fff; /* White text for contrast */
+        }
+
+        header {
+            background-color: #000;
+            color: #fff;
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .logo {
+            height: 87px;
+        }
+        nav {
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            border-radius: 10px;
+			position: relative
+        }
+        nav a {
+            color: #fff;
+            margin: 0 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            font-family: 'Montserrat', sans-serif;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #ff4d4d;
+        }
+        #home-link {
+            color: #FF0000; /* Set the color to #FF0000 */
+        }
+	.vault-link {
+    position: relative; /* To ensure the badge is positioned relative to this link */
+}
+
+.new-badge {
+    background-color: #FF0000; /* Bright red */
+    color: #fff;
+    font-size: 0.6em;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    position: absolute;
+	transform: rotate(30deg);
+    top: -10px; /* Move upwards */
+    right: -22px; /* Move to the right */
+}
+
+        #home-link {
+            color: #FF0000; /* Set the color to #FF0000 */
+        }
+
+        main {
+            padding: 2em;
+            max-width: 1000px;
+            margin: 128px auto;
+            background-color: #111; /* Dark grey background for main content */
+            border-radius: 8px;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns of equal width */
+            gap: 2em;
+            justify-items: center;
+        }
+
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            align-items: center;
+            width: 250px; /* Width for file items */
+            background-color: #444; /* Slightly lighter grey for file items */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            padding: 1em;
+            text-align: center;
+        }
+
+        .file-item img {
+            width: 100%; /* Make sure image fits within the file item */
+            border-radius: 4px;
+            cursor: pointer; /* Make the image clickable */
+        }
+
+        .file-item button {
+            margin-top: 1em;
+            padding: 0.5em 1em;
+            background-color: #FF0000; /* Red button */
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .file-item button:hover {
+            background-color: #cc0000; /* Darker red for hover effect */
+        }
+
+        footer {
+            background-color: #FF0000; /* Red background */
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            margin-top: 2em;
+        }
+
+        .download-modal {
+            display: none;
+            position: fixed;
+            z-index: 1002;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+		.download-modal button{
+		font-weight: bold;
+		margin-top: 20px;
+		cursor: pointer;
+		}
+         #confirmDownload{
+		 background-color: #FF0000;
+		 color: #fff;
+		 padding: 7px 10px;
+		 border-radius: 8px;
+		 transition: 0.4s ease-in;
+		 }
+		  #confirmDownload:hover{
+		  background-color: #fff;
+		  color: #ff0000;
+		  }
+		 #closeDownload{
+         background-color: #fff;
+		 color: #ff0000;
+		 padding: 7px 10px;
+		 border-radius: 8px;
+		 transition: 0.4s ease-in;
+		 }
+		  #closeDownload:hover{
+		  background-color: #ff0000;
+		  color: #fff;
+		  }
+        .download-modal-content {
+            background-color: #111;
+            color: #fff;
+            padding: 2em;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+            animation: scaleIn 0.4s ease;
+        }
+
+        /* Add smooth scaling animation */
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Animation for zooming in the image */
+        @keyframes zoomIn {
+            from { transform: scale(0.8); }
+            to { transform: scale(1); }
+        }
+
+        /* Responsive Design for small screens */
+        @media (max-width: 1024px) {
+            .file-list {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .file-list {
+                grid-template-columns: 1fr; /* 1 column for smaller screens */
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                margin: 0 10px; /* Reduce space between nav links */
+                font-size: 1em;
+            }
+
+            .logo {
+                height: 60px; /* Smaller logo */
+            }
+
+            main {
+                padding: 1em;
+            }
+
+            .file-item {
+                width: 100%; 
+				height: fit-content/* Make file items take full width on small screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 0.9em; /* Further reduce nav link size for very small screens */
+            }
+
+            .file-item button {
+                padding: 0.5em; /* Reduce button padding on smaller screens */
+            }
+
+            main {
+                margin-top: 96px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+      <header>
+    <div class="header-content">
+        <img src="logo.png" alt="SpeedX Logo" class="logo">
+       <nav>
+    <a href="index.html" >Home</a>
+    <a href="about.html" >About</a>
+    <a href="contact.html"  >Contact</a>
+    <a href="social.html">Social</a>
+    <a href="download.html" class="vault-link" id="home-link">Vault <span class="new-badge">NEW</span></a> <!-- Added NEW tag -->
+</nav>
+ </div>
+</header>
+
+    <main>
+        <div class="file-list">
+            <div class="file-item">
+                <img src="t1.jpg" alt="T-Shirt Design Preview" onclick="openModal(this.src)">
+                <button onclick="downloadFile('t-shirt 1.zip')">Download</button>
+            </div>
+            <div class="file-item">
+                <img src="t2.jpg" alt="T-Shirt Design Preview" onclick="openModal(this.src)">
+                <button onclick="downloadFile('t-shirt 2.zip')">Download</button>
+            </div>
+			 <div class="file-item">
+                <img src="t3.jpg" alt="T-Shirt Design Preview" onclick="openModal(this.src)">
+                <button onclick="downloadFile('t-shirt 3.zip')">Download</button>
+            </div>
+			 <div class="file-item">
+                <img src="t4.jpg" alt= "T-Shirt Design Preview" onclick="openModal(this.src)">
+                <button onclick="downloadFile('t-shirt 4.zip')">Download</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SpeedX. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Modal for zoomed-in image -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <img src="" id="modalImage" alt="Zoomed Image">
+        </div>
+    </div>
+
+    <!-- Modal for file download confirmation -->
+    <div class="download-modal" id="downloadModal">
+        <div class="download-modal-content">
+            <p>Do you want to download this file?</p>
+            <button id="confirmDownload">Yes, Download</button>
+            <button onclick="closeDownloadModal()" id="closeDownload">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('imageModal').style.display = 'flex';
+            document.getElementById('modalImage').src = src;
+        }
+
+        document.getElementById('imageModal').onclick = function() {
+            document.getElementById('imageModal').style.display = 'none';
+        };
+
+        function downloadFile(fileUrl) {
+            var downloadModal = document.getElementById('downloadModal');
+            downloadModal.style.display = 'flex';
+
+            document.getElementById('confirmDownload').onclick = function() {
+                window.location.href = fileUrl;
+                downloadModal.style.display = 'none';
+            };
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
